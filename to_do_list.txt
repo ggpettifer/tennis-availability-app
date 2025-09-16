@@ -1,0 +1,10 @@
+
+- link up settings with backend request
+- days/times UI
+- abaility to save settings client side (cookie?)
+- add more venues
+   - battersea
+   - south park
+   - brockwell
+- add links so the user can book
+- add stripe for payments

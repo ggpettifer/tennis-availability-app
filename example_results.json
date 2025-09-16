@@ -1,0 +1,163 @@
+[
+    {
+        "date": "2025-09-12",
+        "availability": {
+            "venueDetails": [
+                {
+                    "name": "Court 1",
+                    "order": 1,
+                    "id": "0ec50b5b-b9f6-488a-a9ab-0e1f7e7a7d02",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": []
+                },
+                {
+                    "name": "Court 2",
+                    "order": 2,
+                    "id": "746d2f41-2eba-492f-bee8-fa9018dc58e0",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": []
+                },
+                {
+                    "name": "Court 3",
+                    "order": 3,
+                    "id": "e2442c6a-20f5-475a-af14-8d76f24f551a",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/e2442c6a-20f5-475a-af14-8d76f24f551a-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/e2442c6a-20f5-475a-af14-8d76f24f551a-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        },
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/e2442c6a-20f5-475a-af14-8d76f24f551a-20250912150000-20250912160000",
+                            "startTime": "2025-09-12T15:00:00",
+                            "endTime": "2025-09-12T16:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/e2442c6a-20f5-475a-af14-8d76f24f551a-20250912150000-20250912160000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                },
+                {
+                    "name": "Court 4",
+                    "order": 4,
+                    "id": "0d73f399-68f3-4a02-af87-7a7ebd816463",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/0d73f399-68f3-4a02-af87-7a7ebd816463-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/0d73f399-68f3-4a02-af87-7a7ebd816463-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                },
+                {
+                    "name": "Court 5",
+                    "order": 5,
+                    "id": "93dcea56-3185-420a-9a22-b9911135de37",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/93dcea56-3185-420a-9a22-b9911135de37-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/93dcea56-3185-420a-9a22-b9911135de37-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                },
+                {
+                    "name": "Court 6",
+                    "order": 6,
+                    "id": "a8c3e168-6111-4a58-9144-3ad32cdd333f",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/a8c3e168-6111-4a58-9144-3ad32cdd333f-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/a8c3e168-6111-4a58-9144-3ad32cdd333f-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                },
+                {
+                    "name": "Court 7",
+                    "order": 7,
+                    "id": "223a17de-9378-486d-b92c-b130f5022c12",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/223a17de-9378-486d-b92c-b130f5022c12-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/223a17de-9378-486d-b92c-b130f5022c12-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                },
+                {
+                    "name": "Court 8",
+                    "order": 8,
+                    "id": "327f1e40-4ae0-422e-b61f-8a6a92263893",
+                    "type": "Outdoor",
+                    "surface": "Hard",
+                    "availableSlots": [
+                        {
+                            "slotId": "https://clubspark.lta.org.uk/slots/327f1e40-4ae0-422e-b61f-8a6a92263893-20250912140000-20250912150000",
+                            "startTime": "2025-09-12T14:00:00",
+                            "endTime": "2025-09-12T15:00:00",
+                            "price": 12.0,
+                            "offerId": "https://clubspark.lta.org.uk/offers/327f1e40-4ae0-422e-b61f-8a6a92263893-20250912140000-20250912150000-00000000-0000-0000-0000-000000000000",
+                            "allowCustomerCancellationFullRefund": true,
+                            "latestCancellationBeforeStartDate": "PT2H"
+                        }
+                    ]
+                }
+            ],
+            "rules": {
+                "minSlots": 1,
+                "maxSlots": 2,
+                "exceededBookings": false,
+                "outsideBookingWindow": false,
+                "availableDates": [
+                    "2025-09-12",
+                    "2025-09-15",
+                    "2025-09-16",
+                    "2025-09-17",
+                    "2025-09-18",
+                    "2025-09-14",
+                    "2025-09-13"
+                ],
+                "openingTime": "07:00",
+                "closingTime": "22:00"
+            },
+            "error": {
+                "hasError": false,
+                "errorMessage": ""
+            }
+        }
+    }
+]
