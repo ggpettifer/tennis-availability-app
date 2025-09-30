@@ -94,9 +94,7 @@ class TennisCourtAvailability:
 
                     day_of_week = date_obj.strftime("%A")
                     availability = day["availability"]
-                    venue_details = availability.get("venueDetails", [])
-                    if not venue_details:
-                        raise Exception("No venue details found in API response")
+                    venue_details = availability["venueDetails"]
 
                     slot_counts = {}
                     print(f"Processing {len(venue_details)} courts for {day['date']}")
