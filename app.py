@@ -9,6 +9,7 @@ from fastapi import Request
 import uvicorn
 from fastapi import Body
 from collections import defaultdict
+import asyncio
 
 VENUE_IDS = {
     "Clapham Common": "2fb20762-62d1-4fc7-961c-f4404d4d1ae8",
@@ -55,19 +56,28 @@ class TennisCourtAvailability:
                 print("Selected venue id: ", venue_id)
                 print("Number of selected slots: ", len(slots))
 
+                # Prepare all the dates and URLs that need to be fetched
+                dates_to_fetch = []
+                for i in range(7):  # next 7 days including today
+                    date = dt.date.today() + dt.timedelta(days=i)
+                    weekday = date.weekday()
+                    if weekday not in day_to_hours_map:
+                        continue
+                    date_str = date.strftime("%Y-%m-%d")
+                    dates_to_fetch.append(date_str)
+                
+                async def fetch_date_availability(client, date_str):
+                    print(f"Fetching data for {date_str}...")
+                    url = f"{self.base_url}?venueid={venue_id}&date={date_str}"
+                    response = await client.get(url)
+                    data = response.json()
+                    return {"date": date_str, "availability": data}
+                
+                # Make all requests concurrently
                 results = []
                 async with httpx.AsyncClient(timeout=20.0) as client:
-                    for i in range(7):  # next 7 days including today
-                        date = dt.date.today() + dt.timedelta(days=i)
-                        weekday = date.weekday()
-                        if weekday not in day_to_hours_map:
-                            continue
-                        date = (dt.date.today() + dt.timedelta(days=i)).strftime("%Y-%m-%d")
-                        print(f"Fetching data for {date}...")
-                        url = f"{self.base_url}?venueid={venue_id}&date={date}"
-                        response = await client.get(url)
-                        data = response.json()
-                        results.append({ "date": date, "availability": data })
+                    tasks = [fetch_date_availability(client, date_str) for date_str in dates_to_fetch]
+                    results = await asyncio.gather(*tasks)
 
                 print(f"Fetched availability for {len(results)} days")
                 print(results)
