@@ -55,52 +55,113 @@ async function checkAvailability() {
 
 function showSkeletonLoader(resultsDiv) {
     const skeletonGrid = document.createElement('div');
-    skeletonGrid.className = 'results-grid';
+    skeletonGrid.className = 'results-time-grid';
     
+    // Create skeleton corner cell
+    const cornerCell = document.createElement('div');
+    cornerCell.className = 'results-empty-corner skeleton';
+    skeletonGrid.appendChild(cornerCell);
+    
+    // Create skeleton day headers
     for (let i = 0; i < 7; i++) {
-        const card = document.createElement('div');
-        card.className = 'skeleton-card';
+        const header = document.createElement('div');
+        header.className = 'results-day-header skeleton';
+        skeletonGrid.appendChild(header);
+    }
+    
+    // Create skeleton time rows
+    for (let hour = 6; hour < 23; hour++) {
+        // Add skeleton time label
+        const timeLabel = document.createElement('div');
+        timeLabel.className = 'results-time-label skeleton';
+        skeletonGrid.appendChild(timeLabel);
         
-        const skeletonHeader = document.createElement('div');
-        skeletonHeader.className = 'skeleton skeleton-header';
-        card.appendChild(skeletonHeader);
-        
-        for (let j = 0; j < 4; j++) {
-            const skeletonSlot = document.createElement('div');
-            skeletonSlot.className = 'skeleton skeleton-slot';
-            card.appendChild(skeletonSlot);
+        // Add skeleton cells for each day
+        for (let day = 0; day < 7; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'results-cell skeleton';
+            skeletonGrid.appendChild(cell);
         }
-        
-        skeletonGrid.appendChild(card);
     }
     
     resultsDiv.appendChild(skeletonGrid);
 }
 
 function renderResults(data, resultsDiv) {
+    // Create a time-grid similar to the time picker
     const resultsGrid = document.createElement('div');
-    resultsGrid.className = 'results-grid';
+    resultsGrid.className = 'results-time-grid';
     
+    // Create data structure for easy lookup
+    const availabilityMap = {};
     data.forEach(day => {
-        const card = document.createElement('div');
-        card.className = 'result-card';
-        
-        const dayHeader = document.createElement('h3');
-        dayHeader.textContent = `${day.day_of_week} (${day.date})`;
-        card.appendChild(dayHeader);
-        
-        const slotList = document.createElement('ul');
+        availabilityMap[day.date] = {};
         day.slots.forEach(slot => {
-            const slotItem = document.createElement('li');
-            slotItem.textContent = `${slot.time} — ${slot.courts_available} courts available`;
-            slotList.appendChild(slotItem);
+            const hour = parseInt(slot.time.split(':')[0]);
+            availabilityMap[day.date][hour] = slot.courts_available;
         });
-        
-        card.appendChild(slotList);
-        resultsGrid.appendChild(card);
     });
     
+    // Get the date range from the data (should be consecutive days starting from today)
+    const dates = data.map(d => d.date).sort();
+    const dayNames = data.map(d => d.day_of_week);
+    
+    // Create empty corner cell
+    const cornerCell = document.createElement('div');
+    cornerCell.className = 'results-empty-corner';
+    resultsGrid.appendChild(cornerCell);
+    
+    // Create day headers
+    data.forEach(day => {
+        const header = document.createElement('div');
+        header.className = 'results-day-header';
+        
+        const dayName = document.createElement('div');
+        dayName.className = 'day-name';
+        dayName.textContent = day.day_of_week.substring(0, 3); // Mon, Tue, etc.
+        
+        const dayDate = document.createElement('div');
+        dayDate.className = 'day-date';
+        dayDate.textContent = formatDate(day.date);
+        
+        header.appendChild(dayName);
+        header.appendChild(dayDate);
+        resultsGrid.appendChild(header);
+    });
+    
+    // Create time rows (6 AM to 10 PM, matching the time picker)
+    for (let hour = 6; hour < 23; hour++) {
+        // Add time label
+        const timeLabel = document.createElement('div');
+        timeLabel.className = 'results-time-label';
+        timeLabel.textContent = `${String(hour).padStart(2, '0')}:00`;
+        resultsGrid.appendChild(timeLabel);
+        
+        // Add cells for each day
+        data.forEach(day => {
+            const cell = document.createElement('div');
+            cell.className = 'results-cell';
+            
+            const courtsAvailable = availabilityMap[day.date][hour];
+            if (courtsAvailable && courtsAvailable > 0) {
+                cell.classList.add('available');
+                cell.textContent = courtsAvailable;
+            } else {
+                cell.classList.add('empty');
+            }
+            
+            resultsGrid.appendChild(cell);
+        });
+    }
+    
     resultsDiv.appendChild(resultsGrid);
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${month}/${day}`;
 }
 
 function initializeTimePicker() {
