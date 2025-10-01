@@ -10,19 +10,7 @@ import uvicorn
 from fastapi import Body
 from collections import defaultdict
 import asyncio
-
-VENUE_IDS = {
-    "Clapham Common": "2fb20762-62d1-4fc7-961c-f4404d4d1ae8",
-    "South Park": "af129600-b4f9-4f39-b181-698cacaad913",
-    "Brockwell Park": "03a2d315-2b9a-411d-8891-1bfde4cb4cf3",
-    "Kennington Park": "38f9b2bb-b840-45a9-9c6e-dc685f04ed25",
-    "Streatham Vale Park": "29dfbcd8-c72b-4629-ba93-212c3d73ee6a",
-    "Streatham Common": "5c1fcb26-be28-4ac4-932f-fc26e6207e90",
-    "Larkhall Park": "9bf5a08b-35a4-4d93-806f-09362d110ebe",
-    "Myatts Fields Park": "c7968b48-2c0c-4e2f-a2ae-850976a46f5e",
-    "Hillside Gardens Park": "e37baae4-39b1-47b0-bd81-b2cdbb6f7a8f",
-    "Vauxhall Park": "ed2c2180-e21f-494a-bf03-199755c45b64"
-}
+import json
 
 
 class TennisCourtAvailability:
@@ -40,8 +28,14 @@ class TennisCourtAvailability:
 
         @self.app.get("/venues")
         async def get_venues():
-            # Return a list of venue names and IDs
-            return [{"name": name, "id": vid} for name, vid in VENUE_IDS.items()]
+            # Read venue data from court_info.json
+            try:
+                with open("court_info.json", "r") as f:
+                    venues = json.load(f)
+                return venues
+            except Exception as e:
+                print("Error loading court_info.json: ", str(e))
+                return []
 
         @self.app.post("/availability")
         async def get_availability(payload: dict = Body(...)):

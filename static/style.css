@@ -312,3 +312,43 @@ body {
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
+
+/* Venue table styles */
+.venue-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.venue-table th {
+  background: #f8f9fa;
+  font-weight: bold;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 12px;
+}
+
+.venue-table td {
+  padding: 1px 6px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.venue-table tr:hover {
+  background: #f0f8ff;
+}
+
+.venue-table input[type="radio"] {
+  margin-right: 8px;
+}
+
+.venue-name {
+  font-weight: 500;
+}
+
+.court-count, .price {
+  text-align: center;
+  font-weight: 500;
+}

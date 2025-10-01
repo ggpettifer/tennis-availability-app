@@ -295,11 +295,37 @@ async function loadVenues() {
         const venueSection = document.getElementById('venue-selector');
         venueSection.innerHTML = '<label>Select Venue:</label>';
         
+        // Create table
+        const table = document.createElement('table');
+        table.className = 'venue-table';
+        
+        // Create header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headerRow.innerHTML = `
+            <th>Select</th>
+            <th>Venue</th>
+            <th>Courts</th>
+            <th>Price/Hour</th>
+        `;
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Create body
+        const tbody = document.createElement('tbody');
         venues.forEach(v => {
-            const div = document.createElement('div');
-            div.innerHTML = `<input type="radio" name="venue" value="${v.id}"> <span>${v.name}</span>`;
-            venueSection.appendChild(div);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="radio" name="venue" value="${v.id}"></td>
+                <td class="venue-name">${v.name}</td>
+                <td class="court-count">${v.numberOfCourts || 'N/A'}</td>
+                <td class="price">£${v.pricePerHour ? v.pricePerHour.toFixed(2) : 'N/A'}</td>
+            `;
+            tbody.appendChild(row);
         });
+        table.appendChild(tbody);
+        
+        venueSection.appendChild(table);
     } catch (error) {
         console.error('Error loading venues:', error);
         alert('Failed to load venues');
