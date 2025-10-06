@@ -112,13 +112,14 @@ function renderResults(data, resultsDiv) {
     resultsGrid.appendChild(cornerCell);
     
     // Create day headers
-    data.forEach(day => {
+    data.forEach((day, index) => {
         const header = document.createElement('div');
         header.className = 'results-day-header';
         
         const dayName = document.createElement('div');
         dayName.className = 'day-name';
-        dayName.textContent = day.day_of_week.substring(0, 3); // Mon, Tue, etc.
+        const dayText = day.day_of_week.substring(0, 3); // Mon, Tue, etc.
+        dayName.textContent = index === 0 ? `${dayText} (today)` : dayText;
         
         const dayDate = document.createElement('div');
         dayDate.className = 'day-date';
@@ -159,9 +160,10 @@ function renderResults(data, resultsDiv) {
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-    return `${month}/${day}`;
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
 function initializeTimePicker() {
@@ -317,7 +319,7 @@ async function loadVenues() {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><input type="radio" name="venue" value="${v.id}"></td>
-                <td class="venue-name">${v.name}</td>
+                <td class="venue-name"><a href="${v.url}" target="_blank" rel="noopener noreferrer">${v.name}</a></td>
                 <td class="court-count">${v.numberOfCourts || 'N/A'}</td>
                 <td class="price">£${v.pricePerHour ? v.pricePerHour.toFixed(2) : 'N/A'}</td>
             `;
