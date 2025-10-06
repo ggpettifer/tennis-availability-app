@@ -102,17 +102,33 @@ function renderResults(data, resultsDiv) {
         });
     });
     
-    // Get the date range from the data (should be consecutive days starting from today)
-    const dates = data.map(d => d.date).sort();
-    const dayNames = data.map(d => d.day_of_week);
+    // Generate complete 7-day range starting from today
+    const today = new Date();
+    const fullWeekData = [];
+    const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD format
+        const dayOfWeek = dayNames[date.getDay() === 0 ? 6 : date.getDay() - 1]; // Adjust for Monday start
+        
+        // Find existing data for this date or create empty entry
+        const existingDay = data.find(d => d.date === dateStr);
+        fullWeekData.push({
+            date: dateStr,
+            day_of_week: dayOfWeek,
+            slots: existingDay ? existingDay.slots : []
+        });
+    }
     
     // Create empty corner cell
     const cornerCell = document.createElement('div');
     cornerCell.className = 'results-empty-corner';
     resultsGrid.appendChild(cornerCell);
     
-    // Create day headers
-    data.forEach((day, index) => {
+    // Create day headers for all 7 days
+    fullWeekData.forEach((day, index) => {
         const header = document.createElement('div');
         header.className = 'results-day-header';
         
@@ -138,12 +154,12 @@ function renderResults(data, resultsDiv) {
         timeLabel.textContent = `${String(hour).padStart(2, '0')}:00`;
         resultsGrid.appendChild(timeLabel);
         
-        // Add cells for each day
-        data.forEach(day => {
+        // Add cells for all 7 days
+        fullWeekData.forEach(day => {
             const cell = document.createElement('div');
             cell.className = 'results-cell';
             
-            const courtsAvailable = availabilityMap[day.date][hour];
+            const courtsAvailable = availabilityMap[day.date] && availabilityMap[day.date][hour];
             if (courtsAvailable && courtsAvailable > 0) {
                 cell.classList.add('available');
                 cell.textContent = courtsAvailable;
