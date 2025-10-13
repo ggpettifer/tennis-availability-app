@@ -313,6 +313,33 @@ body {
   border-right: 1px solid #ccc;
 }
 
+/* Skeleton loading for results grid */
+.results-day-header.skeleton {
+  background: linear-gradient(90deg, #f4f6f9 25%, #e0e3e8 50%, #f4f6f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  color: transparent;
+}
+
+.results-time-label.skeleton {
+  background: linear-gradient(90deg, #f4f6f9 25%, #e0e3e8 50%, #f4f6f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  color: transparent;
+}
+
+.results-cell.skeleton {
+  background: linear-gradient(90deg, #f4f6f9 25%, #e0e3e8 50%, #f4f6f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+.results-empty-corner.skeleton {
+  background: linear-gradient(90deg, #f4f6f9 25%, #e0e3e8 50%, #f4f6f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
 /* Venue table styles */
 .venue-table {
   width: 100%;
