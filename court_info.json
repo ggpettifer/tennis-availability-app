@@ -33,5 +33,40 @@
     "numberOfCourts": 2,
     "pricePerHour": 7.70,
     "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/streatham-vale-park_29dfbcd8-c72b-4629-ba93-212c3d73ee6a/"
+  },
+  {
+    "name": "Streatham Common",
+    "id": "5c1fcb26-be28-4ac4-932f-fc26e6207e90",
+    "numberOfCourts": 1,
+    "pricePerHour": 7.50,
+    "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/streatham-common_5c1fcb26-be28-4ac4-932f-fc26e6207e90/"
+  },
+  {
+    "name": "Larkhall Park",
+    "id": "9bf5a08b-35a4-4d93-806f-09362d110ebe",
+    "numberOfCourts": 2,
+    "pricePerHour": 7.70,
+    "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/larkhall-park_9bf5a08b-35a4-4d93-806f-09362d110ebe/"
+  },
+  {
+    "name": "Myatts Fields Park",
+    "id": "c7968b48-2c0c-4e2f-a2ae-850976a46f5e",
+    "numberOfCourts": 2,
+    "pricePerHour": 7.50,
+    "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/myatts-fields-park_c7968b48-2c0c-4e2f-a2ae-850976a46f5e/"
+  },
+  {
+    "name": "Hillside Gardens Park",
+    "id": "e37baae4-39b1-47b0-bd81-b2cdbb6f7a8f",
+    "numberOfCourts": 4,
+    "pricePerHour": 7.70,
+    "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/hillside-gardens-park_e37baae4-39b1-47b0-bd81-b2cdbb6f7a8f/"
+  },
+  {
+    "name": "Vauxhall Park",
+    "id": "ed2c2180-e21f-494a-bf03-199755c45b64",
+    "numberOfCourts": 2,
+    "pricePerHour": 7.70,
+    "url": "https://www.lta.org.uk/play/book-a-tennis-court/courts/vauxhall-park_ed2c2180-e21f-494a-bf03-199755c45b64/"
   }
 ]

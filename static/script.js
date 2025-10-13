@@ -331,7 +331,9 @@ async function loadVenues() {
         
         // Create body
         const tbody = document.createElement('tbody');
-        venues.forEach(v => {
+        
+        // Add first 3 venues (always visible)
+        venues.slice(0, 3).forEach(v => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><input type="radio" name="venue" value="${v.id}"></td>
@@ -341,11 +343,63 @@ async function loadVenues() {
             `;
             tbody.appendChild(row);
         });
-        table.appendChild(tbody);
         
+        // Add remaining venues (initially hidden)
+        venues.slice(3).forEach(v => {
+            const row = document.createElement('tr');
+            row.className = 'venue-row-hidden';
+            row.style.display = 'none';
+            row.innerHTML = `
+                <td><input type="radio" name="venue" value="${v.id}"></td>
+                <td class="venue-name"><a href="${v.url}" target="_blank" rel="noopener noreferrer">${v.name}</a></td>
+                <td class="court-count">${v.numberOfCourts || 'N/A'}</td>
+                <td class="price">£${v.pricePerHour ? v.pricePerHour.toFixed(2) : 'N/A'}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        
+        table.appendChild(tbody);
         venueSection.appendChild(table);
+        
+        // Add expand/collapse button below table (only if there are more than 3 venues)
+        if (venues.length > 3) {
+            const toggleButton = document.createElement('button');
+            toggleButton.id = 'venue-toggle-btn';
+            toggleButton.className = 'venue-toggle-btn';
+            toggleButton.textContent = `See more venues (${venues.length - 3} more)`;
+            venueSection.appendChild(toggleButton);
+            
+            // Setup toggle functionality
+            setupVenueToggle(venues.length);
+        }
+        
     } catch (error) {
         console.error('Error loading venues:', error);
         alert('Failed to load venues');
     }
+}
+
+function setupVenueToggle(totalVenues) {
+    const toggleBtn = document.getElementById('venue-toggle-btn');
+    let expanded = false;
+    
+    toggleBtn.addEventListener('click', () => {
+        const hiddenRows = document.querySelectorAll('.venue-row-hidden');
+        
+        if (expanded) {
+            // Hide additional venues
+            hiddenRows.forEach(row => {
+                row.style.display = 'none';
+            });
+            toggleBtn.textContent = `See more venues (${totalVenues - 3} more)`;
+            expanded = false;
+        } else {
+            // Show all venues
+            hiddenRows.forEach(row => {
+                row.style.display = 'table-row';
+            });
+            toggleBtn.textContent = 'Hide';
+            expanded = true;
+        }
+    });
 }

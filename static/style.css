@@ -379,3 +379,23 @@ body {
   text-align: center;
   font-weight: 500;
 }
+
+/* Venue toggle button */
+.venue-toggle-btn {
+  background: transparent;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 6px;
+  transition: all 0.2s;
+}
+
+.venue-toggle-btn:hover {
+  background: #f8f9fa;
+  color: #495057;
+  border-color: #adb5bd;
+}
