@@ -243,7 +243,7 @@ body {
   display: grid;
   grid-template-columns: 80px repeat(7, 1fr);
   border: 1px solid #ccc;
-  margin-top: 20px;
+  margin-top: 0;
   user-select: none;
   width: 100%;
   max-width: 100%;
