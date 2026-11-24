@@ -8,7 +8,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 import uvicorn
 from fastapi import Body
-from collections import defaultdict
 import asyncio
 import json
 
@@ -41,22 +40,13 @@ class TennisCourtAvailability:
         async def get_availability(payload: dict = Body(...)):
             try:
                 venue_id = payload.get("venue")
-                slots = payload.get("slots", [])
-
-                day_to_hours_map = defaultdict(list)
-                for item in slots:
-                    day_to_hours_map[item['day']].append(item['hour'])
 
                 print("Selected venue id: ", venue_id)
-                print("Number of selected slots: ", len(slots))
 
                 # Prepare all the dates and URLs that need to be fetched
                 dates_to_fetch = []
                 for i in range(7):  # next 7 days including today
                     date = dt.date.today() + dt.timedelta(days=i)
-                    weekday = date.weekday()
-                    if weekday not in day_to_hours_map:
-                        continue
                     date_str = date.strftime("%Y-%m-%d")
                     dates_to_fetch.append(date_str)
                 
@@ -77,15 +67,7 @@ class TennisCourtAvailability:
                 print(results)
                 output = []
                 for day in results:
-                    print("here")
                     date_obj = datetime.fromisoformat(day['date'])
-                    day_number = date_obj.weekday()
-                    print("day number: ", day_number)
-                    print("day to hours map: ", day_to_hours_map)
-                    if day_number not in day_to_hours_map:
-                        print(f"Skipping {day['date']} as no slots selected for this day")
-                        continue  # Skip days not in selected slots
-
                     day_of_week = date_obj.strftime("%A")
                     availability = day["availability"]
                     venue_details = availability["venueDetails"]
@@ -95,11 +77,8 @@ class TennisCourtAvailability:
                     for court in venue_details:
                         for slot in court.get("availableSlots", []):
                             start_time = slot['startTime']
-                            dt_start = datetime.fromisoformat(start_time)
-                            dt_end = datetime.fromisoformat(slot['endTime'])
-                            if dt_start.hour in day_to_hours_map[day_number]:
-                                print(f"  Found available slot: {start_time} to {slot['endTime']} on court {court.get('courtName')}")
-                                slot_counts[start_time] = slot_counts.get(start_time, 0) + 1
+                            print(f"  Found available slot: {start_time} on court {court.get('courtName')}")
+                            slot_counts[start_time] = slot_counts.get(start_time, 0) + 1
 
                     day_result = {
                         "date": day['date'],

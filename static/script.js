@@ -1,11 +1,5 @@
-// Global variables
-let isMouseDown = false;
-let selectMode = null; // true = selecting, false = deselecting
-let selectAllMode = true; // true = select all, false = clear all
-
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initializeTimePicker();
     loadVenues();
     setupEventListeners();
 });
@@ -21,9 +15,6 @@ async function checkAvailability() {
     // Get selected venue
     const venue = document.querySelector('input[name="venue"]:checked')?.value;
 
-    // Get selected slots
-    const slots = getSelectedSlots();
-
     // Show loader
     showSkeletonLoader(resultsDiv);
 
@@ -32,7 +23,7 @@ async function checkAvailability() {
         const response = await fetch('/availability', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ venue, slots })
+            body: JSON.stringify({ venue })
         });
 
         if (!response.ok) {
@@ -180,130 +171,6 @@ function formatDate(dateString) {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
-}
-
-function initializeTimePicker() {
-    const timePicker = document.getElementById('timePicker');
-    const days = 7;
-    const hours = 23;
-
-    // Create select all cell
-    const selectAllCell = document.createElement('div');
-    selectAllCell.id = 'selectAllCell';
-    selectAllCell.style.cursor = 'pointer';
-    selectAllCell.style.display = 'flex';
-    selectAllCell.style.alignItems = 'center';
-    selectAllCell.style.justifyContent = 'center';
-    selectAllCell.classList.add('selectable-btn');
-    selectAllCell.textContent = 'Select All';
-    timePicker.appendChild(selectAllCell);
-
-    // Create day headers
-    for (let d = 0; d < days; d++) {
-        const header = document.createElement('div');
-        header.className = 'day-header col-select';
-        header.textContent = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][d];
-        timePicker.appendChild(header);
-    }
-
-    // Create time grid
-    for (let h = 6; h < hours; h++) {
-        // Add time label
-        const label = document.createElement('div');
-        label.className = 'time-label row-select';
-        label.textContent = `${String(h).padStart(2, '0')}:00`;
-        timePicker.appendChild(label);
-
-        // Add time cells for each day
-        for (let d = 0; d < days; d++) {
-            const cell = document.createElement('div');
-            cell.className = 'time-cell';
-            cell.dataset.day = d;
-            cell.dataset.hour = h;
-            timePicker.appendChild(cell);
-        }
-    }
-
-    setupTimePickerEvents(timePicker, days, hours);
-}
-
-function setupTimePickerEvents(timePicker, days, hours) {
-    // Mouse selection events
-    timePicker.addEventListener('mousedown', e => {
-        if (e.target.classList.contains('time-cell')) {
-            isMouseDown = true;
-            selectMode = !e.target.classList.contains('selected');
-            e.target.classList.toggle('selected', selectMode);
-            e.preventDefault();
-        }
-    });
-
-    timePicker.addEventListener('mouseover', e => {
-        if (isMouseDown && e.target.classList.contains('time-cell')) {
-            e.target.classList.toggle('selected', selectMode);
-        }
-    });
-
-    document.addEventListener('mouseup', () => {
-        isMouseDown = false;
-    });
-
-    // Row selection (time labels)
-    document.querySelectorAll('.row-select').forEach((label, h) => {
-        label.addEventListener('click', () => {
-            let allSelected = true;
-            for (let d = 0; d < days; d++) {
-                const cell = timePicker.querySelector(`.time-cell[data-day="${d}"][data-hour="${h + 6}"]`);
-                if (cell && !cell.classList.contains('selected')) {
-                    allSelected = false;
-                }
-            }
-            for (let d = 0; d < days; d++) {
-                const cell = timePicker.querySelector(`.time-cell[data-day="${d}"][data-hour="${h + 6}"]`);
-                if (cell) cell.classList.toggle('selected', !allSelected);
-            }
-        });
-    });
-
-    // Column selection (day headers)
-    document.querySelectorAll('.col-select').forEach((header, d) => {
-        header.addEventListener('click', () => {
-            let allSelected = true;
-            for (let h = 6; h < hours; h++) {
-                const cell = timePicker.querySelector(`.time-cell[data-day="${d}"][data-hour="${h}"]`);
-                if (cell && !cell.classList.contains('selected')) {
-                    allSelected = false;
-                }
-            }
-            for (let h = 6; h < hours; h++) {
-                const cell = timePicker.querySelector(`.time-cell[data-day="${d}"][data-hour="${h}"]`);
-                if (cell) cell.classList.toggle('selected', !allSelected);
-            }
-        });
-    });
-
-    // Select all functionality
-    document.getElementById('selectAllCell').addEventListener('click', () => {
-        const allCells = timePicker.querySelectorAll('.time-cell');
-        allCells.forEach(cell => {
-            cell.classList.toggle('selected', selectAllMode);
-        });
-        // Toggle mode and button text
-        selectAllMode = !selectAllMode;
-        document.getElementById('selectAllCell').textContent = selectAllMode ? 'Select All' : 'Clear All';
-    });
-}
-
-function getSelectedSlots() {
-    const selectedCells = document.querySelectorAll('.time-cell.selected');
-    const slots = [];
-    selectedCells.forEach(cell => {
-        slots.push({
-            day: parseInt(cell.dataset.day, 10),
-            hour: parseInt(cell.dataset.hour, 10)
-        });
-    });
-    return slots;
 }
 
 async function loadVenues() {
