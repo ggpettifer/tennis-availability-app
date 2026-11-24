@@ -45,6 +45,8 @@ async function checkAvailability() {
 }
 
 function showSkeletonLoader(resultsDiv) {
+    const scrollWrapper = document.createElement('div');
+    scrollWrapper.className = 'results-scroll';
     const skeletonGrid = document.createElement('div');
     skeletonGrid.className = 'results-time-grid';
     
@@ -75,10 +77,13 @@ function showSkeletonLoader(resultsDiv) {
         }
     }
     
-    resultsDiv.appendChild(skeletonGrid);
+    scrollWrapper.appendChild(skeletonGrid);
+    resultsDiv.appendChild(scrollWrapper);
 }
 
 function renderResults(data, resultsDiv) {
+    const scrollWrapper = document.createElement('div');
+    scrollWrapper.className = 'results-scroll';
     // Create a time-grid similar to the time picker
     const resultsGrid = document.createElement('div');
     resultsGrid.className = 'results-time-grid';
@@ -162,7 +167,8 @@ function renderResults(data, resultsDiv) {
         });
     }
     
-    resultsDiv.appendChild(resultsGrid);
+    scrollWrapper.appendChild(resultsGrid);
+    resultsDiv.appendChild(scrollWrapper);
 }
 
 function formatDate(dateString) {
